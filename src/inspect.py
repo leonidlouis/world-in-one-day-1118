@@ -8,7 +8,7 @@ assert im.size==(1024,1024)
 im.quantize(colors=256,method=Image.Quantize.MEDIANCUT,dither=Image.Dither.NONE).save(root/'assets/entry.png',optimize=True)
 im=Image.open(root/'assets/entry.png').convert('RGB')
 im.resize((300,300),Image.Resampling.LANCZOS).save(root/'build/preview-300.png')
-regions={'masthead':(0,0,1024,161),'lead-1':(14,161,346,430),'lead-2':(346,161,678,430),'lead-3':(678,161,1010,430),'medium-top-left':(14,430,612,611),'medium-top-right':(610,430,1010,611),'medium-bottom-left':(14,611,612,790),'medium-bottom-right':(610,611,1010,790),'map':(14,790,305,997),'briefs-left':(306,790,658,997),'briefs-right':(658,790,1010,997),'footer':(0,995,1024,1024)}
+regions={'masthead':(0,0,1024,132),'lead-1':(14,130,346,428),'lead-2':(346,130,678,428),'lead-3':(678,130,1010,428),'medium-top-left':(14,426,612,610),'medium-top-right':(610,426,1010,610),'medium-bottom-left':(14,608,612,790),'medium-bottom-right':(610,608,1010,790),'map':(14,786,305,981),'briefs-left':(306,786,658,981),'briefs-right':(658,786,1010,981),'footer':(0,979,1024,1024)}
 (root/'build/crops').mkdir(exist_ok=True)
 for name,bounds in regions.items():
     crop=im.crop(bounds)
@@ -28,7 +28,7 @@ for card in audit['cards']:
             if min(a['x']+a['w'],b['x']+b['w'])-max(a['x'],b['x'])>.4 and min(a['y']+a['h'],b['y']+b['h'])-max(a['y'],b['y'])>.4:
                 issues.append(f"{card['id']} illustration touches type: {b['text']}")
 for b in audit['briefs']:
-    right=652 if b['id']<30 else 1004
+    right=652 if b['id']<29 else 1004
     t=b['text']
     if t['x']+t['w']>right-1:
         issues.append(f"Brief {b['id']} exceeds its column: {t['text']}")
@@ -46,7 +46,7 @@ for i,a in enumerate(audit['text']):
         if min(a['x']+a['w'],b['x']+b['w'])-max(a['x'],b['x'])>.4 and min(a['y']+a['h'],b['y']+b['h'])-max(a['y'],b['y'])>.4:
             issues.append(f"Page text intersection: {a['text']} / {b['text']}")
 (root/'build/layout-issues.json').write_text(json.dumps(issues,indent=2))
-print(f"PNG: 1024 × 1024, {(root/'assets/entry.png').stat().st_size:,} bytes. 13 scenes, 32 briefs, {len(audit['pins'])} geographic pins.")
+print(f"PNG: 1024 × 1024, {(root/'assets/entry.png').stat().st_size:,} bytes. 13 scenes, 30 briefs, {len(audit['pins'])} geographic pins.")
 print(f"Layout checks: {len(issues)} issues. 12 inspection crops at 2×.")
 for issue in issues: print(issue)
 

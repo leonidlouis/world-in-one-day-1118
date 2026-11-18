@@ -86,3 +86,54 @@ export const scenes={
  r(154,36,34,24,teal,'rx="2"')+r(161,17,21,28,'#fff9e7')+l('M166 25 L171 30 L179 21',teal,2)+r(161,41,21,2,navy)+t(171,55,'251–11',8,'#fff9e8',700,'text-anchor="middle"')
  }
 };
+
+// Round 4 literal lead scenes. The maps show claimed routes, not measured tracks.
+const star=(x,y,outer,inner=outer*.42)=>p(Array.from({length:10},(_,i)=>{const a=-Math.PI/2+i*Math.PI/5,rr=i%2?inner:outer;return `${i?'L':'M'}${x+Math.cos(a)*rr} ${y+Math.sin(a)*rr}`;}).join(' ')+'Z',gold);
+const chinaFlag=(x,y,w=36,h=24)=>r(x,y,w,h,'#b93832')+star(x+8,y+8,4.2)+[[15,4],[19,8],[19,13],[15,17]].map(([dx,dy])=>star(x+dx,y+dy,1.5)).join('');
+const usFlag=(x,y,w=40,h=26)=>r(x,y,w,h,'#fffaf0')+Array.from({length:7},(_,i)=>r(x,y+i*h/13*2,w,h/13,'#b94e42')).join('')+r(x,y,w*.43,h*7/13,navy)+Array.from({length:9},(_,row)=>Array.from({length:row%2?5:6},(_,col)=>c(x+1.4+col*2.65+(row%2?1.3:0),y+1.1+row*1.43,.34,'#fffaf0')).join('')).join('');
+const leader=(x,y,skin,suit,hair)=>c(x,y,10,skin)+p(`M${x-10} ${y-2} Q${x-9} ${y-15} ${x+10} ${y-6} L${x+9} ${y-2} Q${x} ${y-8} ${x-10} ${y-2}`,hair)+p(`M${x-13} ${y+43} V${y+17} Q${x} ${y+6} ${x+13} ${y+17} V${y+43} Z`,suit)+l(`M${x} ${y+13} V${y+33}`,'#f8f5ea',2.6)+l(`M${x-7} ${y+43} V${y+65} M${x+7} ${y+43} V${y+65}`,ink,6);
+scenes.airport={w:320,h:157,art:
+ r(0,0,320,157,'#e2ecec')+r(0,63,320,94,'#c8d3cf')+r(0,146,320,11,'#b9c5c0')+
+ t(12,17,'SHENZHEN',14,navy,750)+r(200,6,120,19,'#c1d2d5')+l('M210 14 H309','#f0f4ec',3)+
+ p('M0 127 L160 111 L254 157 H0 Z','#b9584d')+l('M6 140 L118 127','#e8c6a3',2)+
+ p('M15 48 Q12 42 27 40 H91 Q108 40 119 50 L107 56 H28 Z','#fffdf4')+p('M31 40 L22 22 H34 L54 40 Z',navy)+p('M62 46 L83 25 H95 L81 46 Z','#b8c5c0')+p('M61 52 L84 73 H71 L45 52 Z','#f9f8ef')+r(95,43,10,5,navy)+[39,49,59,69].map(x=>r(x,43,5,4,navy)).join('')+c(35,60,3,ink)+c(98,60,3,ink)+l('M106 57 V82 L132 95','#f9f8ee',3)+
+ [135,158,181].map((x,i)=>p(`M${x} ${11+i%2*5} l12 -3 -5 4 5 3 -12 -2 -5 3 1 -4 -1 -4 Z`,navy)).join('')+
+ l('M136 25 V102 M294 27 V102',navy,1.2)+chinaFlag(137,26,35,23)+usFlag(254,27,40,26)+t(154,60,'CHINA',10,navy,700,'text-anchor="middle"')+t(274,64,'USA',10,navy,700,'text-anchor="middle"')+
+ t(184,71,'XI',12.5,navy,750,'text-anchor="middle"')+t(228,71,'TRUMP',12.5,navy,750,'text-anchor="middle"')+
+ leader(184,87,'#d2a16f',navy,'#243036')+leader(228,87,'#e3b487','#263d54','#cda253')+
+ p('M184 106 L204 119 L214 111 L220 116 L205 128 L181 116 Z',navy)+p('M229 106 L215 116 L207 121 L212 127 L228 118 L237 110 Z','#263d54')+p('M204 118 L213 115 L220 120 L213 127 L204 124 Z','#deb082')+
+ [275,293,311].map(x=>c(x,113,3.8,'#bb926c')+r(x-4.5,118,9,20,navy)+r(x-5,108,10,4,navy)+l(`M${x-2.5} 138 V151 M${x+2.5} 138 V151`,ink,2.4)+l(`M${x+6} 101 V144`,gold,1.2)).join('')
+};
+scenes.gulf={w:320,h:157,art:
+ r(0,0,320,157,'#cbdfe0')+
+ p('M0 0 H170 L149 15 L128 23 L115 43 L108 57 L123 77 L140 91 L158 128 L183 157 H0 Z','#d9c9ad')+
+ p('M172 0 H320 V157 L287 134 L259 106 L239 83 L216 68 L204 45 L183 29 Z','#cfbc9e')+
+ l('M170 0 L149 15 L128 23 L115 43 L108 57 L123 77 L140 91 L158 128 L183 157','#f4eddd',1.6)+l('M172 0 L183 29 L204 45 L216 68 L239 83 L259 106 L287 134 L320 157','#f4eddd',1.6)+
+ t(15,26,'KUWAIT',18,navy,750)+t(15,44,'Ali Al Salem · US base',11.5,navy,650)+
+ t(252,25,'IRAN',19,navy,750,'text-anchor="middle"')+t(252,41,'Iran says: drone attacks',10.5,red,650,'text-anchor="middle"')+
+ l('M234 53 Q164 43 102 55',red,2.7,'stroke-dasharray="5 4"')+p('M100 56 L110 46 L113 55 Z',red)+
+ l('M231 62 Q201 88 160 112',red,2.7,'stroke-dasharray="5 4"')+p('M158 114 L166 102 L171 110 Z',red)+
+ drone(151,49,.5,red)+drone(196,83,.45,red)+
+ c(102,56,4.5,navy)+c(102,56,1.7,'#fffdf0')+r(10,69,113,17,'#f5ecd9','rx="2"')+t(16,81,'Kuwait says: intercepted',10.5,navy,650)+
+ c(159,113,5,'#b5c4ad')+c(159,113,2.8,navy)+t(144,136,'BAHRAIN',16,navy,750,'text-anchor="middle"')+t(177,150,'Bahrain says: intercepted',10.5,navy,650,'text-anchor="middle"')+
+ t(248,108,'PERSIAN GULF',12,teal,650,'text-anchor="middle"')
+};
+scenes.cop={w:320,h:157,art:
+ r(0,0,320,157,'#dfece6')+c(270,47,29,'#c0d7cd')+p('M254 28 L267 19 L281 25 L282 39 L267 47 L259 64 L247 52 Z',teal)+p('M280 47 L294 54 L286 71 L272 68 L267 55 Z',teal)+
+ r(225,111,87,38,'#a4c0b3')+p('M216 111 L269 91 L320 111 Z','#f7f4df')+[236,255,274,293].map(x=>r(x,115,7,31,'#f4f2dd')).join('')+r(219,149,101,5,navy)+
+ r(16,9,207,142,'#fffcf1','rx="2"')+r(26,18,187,4,navy)+t(120,43,'COP31 · DRAFT TEXT',20,navy,750,'text-anchor="middle"')+t(120,57,'TWO OPTIONS · STILL OPEN',10.5,teal,700,'text-anchor="middle"')+l('M29 65 H209','#c3d4c9',1)+
+ t(30,86,'1   TRANSITION AWAY',17,navy,700)+t(30,113,'2   PHASE-OUT',20,navy,750)+l('M53 106 H153',red,2.6)+t(174,113,'?',23,red,750)+
+ r(30,122,179,24,'#f0ddd1','rx="2"')+t(119,133,'DISPUTED',13.5,red,750,'text-anchor="middle"')+t(119,143,'BOTH OPTIONS REMAIN IN DRAFT',8.5,navy,650,'text-anchor="middle"')
+};
+scenes.markets={w:200,h:65,art:
+ r(0,0,200,65,'#e9e0cd')+r(8,23,42,32,'#bdc9c0')+p('M4 23 L29 8 L55 23 Z','#fff9e9')+[14,25,36,46].map(x=>r(x,28,4,24,'#fff9e9')).join('')+r(4,55,52,5,navy)+
+ r(65,5,77,55,'#fff9ed','rx="2"')+t(71,18,'DOW −1.09%',13,navy,750)+l('M72 25 L89 31 L105 27 L119 42 L134 47',red,3)+p('M124 47 H137 V35 Z',red)+t(72,56,'50,204 AT CLOSE',8.5,navy,650)+
+ p('M149 35 L155 21 H180 L188 35 Z',gold)+p('M145 48 L152 34 H177 L184 48 Z','#ba8a38')+t(170,61,'$3,739.66',10,navy,750,'text-anchor="middle"')
+};
+scenes.euloan={w:200,h:65,art:
+ r(0,0,200,65,'#dee7e4')+l('M12 9 V59 M188 12 V59',navy,1.4)+r(13,10,49,34,'#284879')+
+ Array.from({length:12},(_,i)=>{const a=i*Math.PI/6;return star(37.5+11*Math.cos(a),27+11*Math.sin(a),1.8);}).join('')+
+ r(153,13,35,13,'#4683ac')+r(153,26,35,13,'#e7c35c')+
+ l('M52 51 H151',teal,2,'stroke-dasharray="4 4"')+p('M151 51 L142 46 V56 Z',teal)+
+ r(70,3,77,59,'#fffaf0','rx="2"')+r(77,9,63,3,teal)+t(108.5,23,'PROPOSED LOAN · UP TO',8.4,navy,750,'text-anchor="middle"')+t(108.5,44,'€45bn',24,navy,750,'text-anchor="middle"')+t(108.5,57,'UKRAINE · 2027',10,teal,700,'text-anchor="middle"')
+};

@@ -40,7 +40,7 @@ try{
       const r=e.getBoundingClientRect();
       if(!['text','tspan'].includes(e.tagName.toLowerCase()))return {x:r.x,y:r.y,w:r.width,h:r.height,text:e.textContent};
       if(e.children.length){const boxes=[...e.children].map(box);const x=Math.min(...boxes.map(b=>b.x)),y=Math.min(...boxes.map(b=>b.y));return {x,y,w:Math.max(...boxes.map(b=>b.x+b.w))-x,h:Math.max(...boxes.map(b=>b.y+b.h))-y,text:e.textContent};}
-      const style=getComputedStyle(e);context.font=style.fontWeight+' '+style.fontSize+' '+style.fontFamily;
+      const style=getComputedStyle(e);context.font=style.fontStyle+' '+style.fontWeight+' '+style.fontSize+' '+style.fontFamily;
       const m=context.measureText(e.textContent),point=e.getStartPositionOfChar(0);
       return {x:point.x-m.actualBoundingBoxLeft,y:point.y-m.actualBoundingBoxAscent,w:m.actualBoundingBoxLeft+m.actualBoundingBoxRight,h:m.actualBoundingBoxAscent+m.actualBoundingBoxDescent,text:e.textContent};
     };
@@ -60,4 +60,4 @@ try{
 }
 const result=spawnSync('python3',[resolve(root,'src/inspect.py')],{encoding:'utf8'});
 process.stdout.write(result.stdout||'');
-if(result.status!==0)throw Error(result.stderr);
+if(result.status!==0)throw Error(result.stderr||'Image layout audit failed; see build/layout-issues.json');

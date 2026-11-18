@@ -1,4 +1,4 @@
-// Sole sources: facts1118.md and facts1118b.md. Addendum corrections take priority.
+// Sole sources: facts1118.md, facts1118b.md, facts1118c.md; C overrides B and A.
 // Removed: Nvidia, Prague, Tuesday Knesset vote. Alaska is a dated small brief.
 const illustrated=(id,tier,region,scene,place,caption,kicker,title,deck,xy)=>({id,tier,region,scene,place,caption,kicker,title,deck,xy});
 const brief=(id,region,place,fact,xy)=>({id,tier:'brief',region,place,fact,xy});
@@ -12,11 +12,11 @@ illustrated(6,'medium','asia','cyclone','Bay of Bengal','BAY OF BENGAL · IMD FO
 illustrated(7,'medium','africa','sudan','Sudan','SUDAN · NEW AMNESTY REPORT','AFRICA · HUMAN RIGHTS',['Amnesty seeks','RSF war-crimes probe'],['Nine June–August drone strikes:','37 civilians killed, 10 injured, Amnesty says.'],[30.22,13.18]),
 illustrated(8,'medium','asia','garments','Bangladesh','BANGLADESH · GARMENT WORKERS','ASIA · LABOUR',['Garment protests','shut 132+ factories'],['Demand: Tk 30,000 monthly minimum wage;','highways blocked, clashes with police.'],[90.25,23.9]),
 illustrated(9,'medium','americas','ipo','New York','NEW YORK · NASDAQ / ANT','AMERICAS · AI MARKETS',['Anthropic sets','$70–$78 IPO range'],['825M Class A shares; pricing due today.','Nasdaq trading set to start Thursday.'],[-74.01,40.71]),
-illustrated(10,'medium','global','game','Global','ROCKSTAR · THURSDAY LAUNCH','GLOBAL · GAMES',['GTA VI due','at midnight'],['13 years after V; Thursday launch.','Sensor Tower est.: 14.9M preorders by Nov 16.'],null),
+illustrated(10,'medium','americas','markets','New York','NEW YORK · REUTERS / MARKET CLOSE','AMERICAS · MARKETS / FED',['Dow drops 1.1%;','gold falls to $3,740'],['Fed minutes: more hikes; Waller warns','December may need a half-point rise.'],[-74.01,40.71]),
 illustrated(11,'medium','middleEast','gaza','Gaza','GAZA · REPORT TO UN COUNCIL','MIDDLE EAST · CEASEFIRE',['Gaza truce at risk','of collapse'],['Board of Peace warns action is urgent;','its report faults both Israel and Hamas.'],[34.45,31.5]),
 illustrated(12,'medium','global','voyager','Deep space','DEEP SPACE · VOYAGER 1','GLOBAL · SPACE',['Voyager 1 reaches','one light-day'],['First human-made object; 10:16 UTC.','Radio signals take 24 hours each way.'],null),
-illustrated(13,'medium','americas','jeffries','Washington','WASHINGTON · US HOUSE','AMERICAS · POLITICS',['Democrats nominate','Jeffries for Speaker'],['Caucus vote 251–11; full House vote','due 3 January 2027.'],[-77.04,38.91]),
-brief(14,'global','Gold','Below $3,800/oz, a year-plus low as dollar firms.',null),
+illustrated(13,'medium','europe','euloan','Brussels','EU → UKRAINE · 2027 LOAN','EUROPE · LOAN PROPOSAL',['EU proposes up to','€45bn Ukraine loan'],['2027 loan needs Parliament/Council approval.','Repaid only when Russia pays reparations.'],[4.35,50.85]),
+brief(14,'global','GTA VI','Launch due midnight Thursday; Take-Two shares gain 7.7%.',null),
 brief(15,'middleEast','Iraq–Turkey','Oil pipeline restarts after 12 years; up to 750,000 b/d.',[43,34]),
 brief(16,'africa','Ethiopia–Eritrea','Sources report troop build-up along border.',[39.5,14.5]),
 brief(17,'asia','Myanmar','Min Aung Hlaing says ties with ASEAN will be reviewed.',[96.1,19.75]),
@@ -29,24 +29,22 @@ brief(23,'europe','UK','Sanctions eight settlement firms and a Gaza-aid-blocking
 brief(24,'asia','Manila','Quad leaders meet for the first time in more than two years.',[120.98,14.6]),
 brief(25,'asia','Philippines','Trump announces US trade deal with more defence cooperation.',[120.98,14.6]),
 brief(26,'middleEast','Hormuz','US–Iran talks stalled over safe navigation through strait.',[56.3,26.6]),
-brief(27,'middleEast','Oman','Oman, Iran, Uzbekistan ministers urge free navigation.',[58.4,23.6]),
+brief(27,'americas','USA','Democrats nominate Jeffries, 251–11; Speaker vote Jan 3, 2027.',[-77.04,38.91]),
 brief(28,'asia','Shenzhen','Putin meets Xi on the sidelines of APEC.',[114.06,22.55]),
-brief(29,'americas','US Fed','Musalem sees several more rate hikes before spring.',[-90.2,38.63]),
+brief(29,'global','Oil','Brent −2.37% to $90.93; US crude −4.39% to $82.23 after inventories rose.',null),
 brief(30,'asia','Mongolia','Committee backs president’s resignation request; vote expected Thu.',[106.9,47.92]),
-brief(31,'americas','Alaska','Peltola flips seat; AP call late Tue US time / Wed UTC.',[-151,64]),
+brief(31,'americas','Alaska','AP calls Senate race for Peltola (early Wed UTC).',[-151,64]),
 brief(32,'americas','Canada–China','Carney, Xi agree reciprocal tariff relief to expand trade.',[-106.35,56.13]),
 brief(33,'americas','Venezuela','Unions announce 24-hour strike and palace protest.',[-66.9,10.48]),
 brief(34,'americas','Paraguay','Attorney general resigns ahead of impeachment.',[-57.64,-25.26]),
 brief(35,'africa','Mauritius','Gives UK a December ultimatum to hand over Chagos.',[72,-6]),
 brief(36,'europe','Serbia','Jet crashes near Belgrade; pilot reportedly killed.',[20.46,44.82]),
-brief(37,'europe','Kosovo','Thaci gets 17 months for interfering with war-crimes trial.',[21.16,42.66]),
-brief(38,'europe','UK','US Army officer held on suspicion of spying for Russia.',[-1.5,52]),
-brief(39,'americas','El Paso','ICE detains ex-boxing champion Jorge Linares at airport.',[-106.49,31.76]),
-brief(40,'europe','France','Diallo to challenge Infantino for FIFA; vote 18 March 2027.',[2.35,48.86]),
-brief(41,'europe','Spain','Racist Mbappe abuse: fan gets 11-month suspended term.',[-5.85,43.36]),
-brief(42,'europe','Europe','Google’s Ask Maps expands to 30 European countries.',[10,52]),
-brief(43,'europe','EU','Tech leaders including LeCun urge AI funds in 2028–34 budget.',[4.35,50.85]),
-brief(44,'europe','EU','Four more countries publish fossil transition roadmaps.',[10,50]),
-brief(45,'americas','USA','Rubio says Microsoft, FAA, bank outages are not a cyberattack.',[-98.6,39.8]),
+brief(37,'europe','UK','US Army officer held on suspicion of spying for Russia.',[-1.5,52]),
+brief(38,'americas','El Paso','ICE detains ex-boxing champion Jorge Linares at airport.',[-106.49,31.76]),
+brief(39,'europe','France','Diallo to challenge Infantino for FIFA; vote 18 March 2027.',[2.35,48.86]),
+brief(40,'europe','Spain','Racist Mbappe abuse: fan gets 11-month suspended term.',[-5.85,43.36]),
+brief(41,'europe','EU','Tech leaders including LeCun urge AI funds in 2028–34 budget.',[4.35,50.85]),
+brief(42,'europe','EU','Four more countries publish fossil transition roadmaps.',[10,50]),
+brief(43,'americas','USA','Rubio says Microsoft, FAA, bank outages are not a cyberattack.',[-98.6,39.8]),
 ];
-if(stories.length!==45||new Set(stories.map(s=>s.id)).size!==45)throw Error('45 distinct items expected');
+if(stories.length!==43||new Set(stories.map(s=>s.id)).size!==43)throw Error('43 distinct items expected');
