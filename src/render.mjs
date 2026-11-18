@@ -29,7 +29,7 @@ try{
   // Poll through CDP until the local document is parsed, then await its fonts.
   for(let i=0;i<100;i++){
     const r=await cmd('Runtime.evaluate',{expression:'document.querySelectorAll("[data-card]").length',returnByValue:true},sessionId);
-    if(r.result.value===46)break;
+    if(r.result.value===13)break;
     await new Promise(r=>setTimeout(r,50));
     if(i===99)throw Error('Document did not load');
   }
@@ -38,16 +38,16 @@ try{
     const context=document.createElement('canvas').getContext('2d');
     const box=e=>{
       const r=e.getBoundingClientRect();
-      if(e.tagName.toLowerCase()!=='text')return {x:r.x,y:r.y,w:r.width,h:r.height,text:e.textContent};
+      if(!['text','tspan'].includes(e.tagName.toLowerCase()))return {x:r.x,y:r.y,w:r.width,h:r.height,text:e.textContent};
+      if(e.children.length){const boxes=[...e.children].map(box);const x=Math.min(...boxes.map(b=>b.x)),y=Math.min(...boxes.map(b=>b.y));return {x,y,w:Math.max(...boxes.map(b=>b.x+b.w))-x,h:Math.max(...boxes.map(b=>b.y+b.h))-y,text:e.textContent};}
       const style=getComputedStyle(e);context.font=style.fontWeight+' '+style.fontSize+' '+style.fontFamily;
-      const m=context.measureText(e.textContent),anchor=e.getAttribute('text-anchor');
-      const x=+e.getAttribute('x')-(anchor==='middle'?m.width/2:anchor==='end'?m.width:0);
-      const y=+e.getAttribute('y');
-      return {x:x-m.actualBoundingBoxLeft,y:y-m.actualBoundingBoxAscent,w:m.actualBoundingBoxLeft+m.actualBoundingBoxRight,h:m.actualBoundingBoxAscent+m.actualBoundingBoxDescent,text:e.textContent};
+      const m=context.measureText(e.textContent),point=e.getStartPositionOfChar(0);
+      return {x:point.x-m.actualBoundingBoxLeft,y:point.y-m.actualBoundingBoxAscent,w:m.actualBoundingBoxLeft+m.actualBoundingBoxRight,h:m.actualBoundingBoxAscent+m.actualBoundingBoxDescent,text:e.textContent};
     };
     const cards=[...document.querySelectorAll('[data-card]')].map(g=>({id:g.dataset.card,x:+g.dataset.x,y:+g.dataset.y,w:+g.dataset.width,h:+g.dataset.height,text:[...g.querySelectorAll('text')].map(box),icons:[...g.querySelectorAll('[data-illustration] use')].map(box)}));
     const pins=[...document.querySelectorAll('[data-pin]')].map(g=>({id:g.dataset.pin,lon:+g.dataset.lon,lat:+g.dataset.lat,text:box(g.querySelector('text'))}));
-    return {cards,pins,text:[...document.querySelectorAll('text')].filter(e=>!e.closest('defs')).map(box)};
+    const briefs=[...document.querySelectorAll('[data-brief]')].map(g=>({id:+g.dataset.brief,text:box(g.querySelector('text:last-child'))}));
+    return {cards,pins,briefs,text:[...document.querySelectorAll('text')].filter(e=>!e.closest('defs')).map(box)};
   })()`,returnByValue:true},sessionId);
   writeFileSync(resolve(root,'build/audit.json'),JSON.stringify(audit.result.value,null,2));
   const shot=await cmd('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false,clip:{x:0,y:0,width:1024,height:1024,scale:1}},sessionId);
